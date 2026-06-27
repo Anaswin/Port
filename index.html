@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K Anaswin Raj | Software Developer & Automation Builder</title>
+  <meta name="description"
+    content="Portfolio of K Anaswin Raj, a final-year MCA student focusing on core software development, web tools, automated dashboards, and data-driven backends.">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar-container">
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="brand-bracket">&lt;</span>
+        <span class="brand-text">anaswin.dev</span>
+        <span class="brand-bracket">/&gt;</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-outline btn-sm">Get in Touch</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero & Terminal Section -->
+  <section id="home" class="hero-section">
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-container">
+
+      <!-- Hero Left: Content -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Available for Opportunities
+        </div>
+        <h1 class="hero-title">
+          Building <span class="text-gradient">practical tools</span> & automated dashboards.
+        </h1>
+        <p class="hero-subtitle">
+          I'm a final-year MCA student specializing in core software development, web extensions, and data-driven
+          backends. I prefer automating systems and building interactive dashboards over boilerplate.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View My Projects</a>
+          <a href="#contact" class="btn btn-secondary">Connect</a>
+        </div>
+      </div>
+
+      <!-- Hero Right: Interactive Terminal -->
+      <div class="hero-terminal-wrapper">
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-controls">
+              <span class="control-dot close"></span>
+              <span class="control-dot minimize"></span>
+              <span class="control-dot maximize"></span>
+            </div>
+            <div class="terminal-title">anaswin@dev-shell: ~</div>
+            <div class="terminal-status">
+              <span class="status-indicator online"></span>
+              <span>online</span>
+            </div>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="terminal-line system-msg">
+              Welcome to Anaswin's Interactive Shell (v1.0.2-LTS).
+            </div>
+            <div class="terminal-line system-msg">
+              Type <span class="code-hl">help</span> to list available commands and navigate the portfolio.
+            </div>
+            <div class="terminal-line">
+              <span class="term-prompt">guest@anaswin.dev:~$</span>
+              <span class="term-command-hint">try typing "skills" or "projects"</span>
+            </div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="term-prompt">guest@anaswin.dev:~$</span>
+            <input type="text" id="terminal-input" autocomplete="off" autofocus placeholder="Type a command..."
+              maxlength="500">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title font-title">Technical Stack</h2>
+        <p class="section-subtitle">The tools, languages, and frameworks I leverage to create software.</p>
+      </div>
+
+      <div class="skills-grid">
+        <!-- Languages -->
+        <div class="skill-card">
+          <div class="skill-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-svg">
+              <path d="m18 16 4-4-4-4"></path>
+              <path d="m6 8-4 4 4 4"></path>
+              <path d="m14.5 4-5 16"></path>
+            </svg>
+          </div>
+          <h3 class="skill-category-title">Languages</h3>
+          <ul class="skills-list">
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">Python</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 90%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">Java</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 75%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">JavaScript (ES6+)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">MySQL</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">HTML5 & CSS3</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 90%;"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Frameworks & Core Tools -->
+        <div class="skill-card">
+          <div class="skill-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-svg">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <path d="M9 3v18"></path>
+              <path d="M15 3v18"></path>
+              <path d="M3 9h18"></path>
+              <path d="M3 15h18"></path>
+            </svg>
+          </div>
+          <h3 class="skill-category-title">Frameworks & Core Tools</h3>
+          <ul class="skills-list">
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">Django</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">React</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">FastAPI</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 75%;"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Libraries & Specializations -->
+        <div class="skill-card">
+          <div class="skill-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="skill-svg">
+              <path d="M12 2v20"></path>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3 class="skill-category-title">Specializations & APIs</h3>
+          <ul class="skills-list">
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">NLTK (NLP Analysis)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">JSZip (In-browser Compression)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">Chrome Extensions API</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li>
+              <div class="skill-info">
+                <span class="skill-name">IoT Integration & Time-series</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 70%;"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title font-title">Featured Projects</h2>
+        <p class="section-subtitle">Real-world applications built to solve problems, optimize workflows, and handle
+          data.</p>
+      </div>
+
+      <div class="projects-container">
+
+        <!-- Project 1: Fake News Detector -->
+        <div class="project-wrapper">
+          <div class="project-details">
+            <span class="project-tag">Chrome Extension / NLP</span>
+            <h3 class="project-title">Fake News Detector</h3>
+            <p class="project-description">
+              A lightweight Chrome extension that parses web page DOM text nodes on active tabs and runs structural
+              analysis via NLTK markers to flag potential misinformation indicators before reading.
+            </p>
+            <div class="project-tech-stack">
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">NLTK</span>
+              <span class="tech-tag">Chrome API</span>
+              <span class="tech-tag">HTML/CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/fake-news-detector" target="_blank" rel="noopener noreferrer"
+                class="btn btn-outline btn-sm icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="link-svg">
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                  </path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+                GitHub Repo
+              </a>
+            </div>
+          </div>
+          <!-- Project 1 Interactive Widget: Chrome DOM Scanner -->
+          <div class="project-widget">
+            <div class="widget-container extension-widget">
+              <div class="browser-mockup">
+                <div class="browser-bar">
+                  <div class="browser-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="browser-url">https://news-portal.com/article-10294</div>
+                </div>
+                <div class="browser-page-content" id="scanner-webpage">
+                  <h4 class="page-title">Breaking: Secret Artificial Intelligence Algorithm Discovered Under Antarctica
+                    Ice Sheet</h4>
+                  <p class="page-node" data-node="1">Researchers claim a fully functioning core CPU from 20,000 years
+                    ago was discovered.</p>
+                  <p class="page-node" data-node="2">The source, who wished to remain anonymous, said it runs a version
+                    of ancient Lisp.</p>
+                  <p class="page-node" data-node="3">Scientists worldwide are expressing extreme skepticism regarding
+                    the authenticity of the report.</p>
+                </div>
+              </div>
+              <div class="extension-popup">
+                <div class="popup-header">
+                  <div class="popup-title">VeriTrust Scanner v1.0</div>
+                  <div class="popup-status-badge">active</div>
+                </div>
+                <div class="popup-body">
+                  <button class="btn btn-primary btn-sm btn-block" id="btn-scan-dom">Scan Active Tab DOM</button>
+
+                  <div class="scan-progress-wrapper hide" id="scan-progress-container">
+                    <div class="scan-status-text" id="scan-status">Extracting DOM text nodes...</div>
+                    <div class="scan-bar-bg">
+                      <div class="scan-bar-fill" id="scan-fill" style="width: 0%;"></div>
+                    </div>
+                  </div>
+
+                  <div class="scan-results hide" id="scan-results-container">
+                    <div class="metrics-grid">
+                      <div class="metric-item">
+                        <span class="metric-label">Parsed Nodes</span>
+                        <span class="metric-val" id="metric-nodes">3</span>
+                      </div>
+                      <div class="metric-item">
+                        <span class="metric-label">NLTK Flagged</span>
+                        <span class="metric-val text-alert" id="metric-flags">2</span>
+                      </div>
+                    </div>
+                    <div class="verdict-banner danger" id="verdict-banner">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="alert-svg">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                      </svg>
+                      <div>
+                        <strong>High Misinformation Markers</strong>
+                        <p class="verdict-desc">High density of unsupported assertions and sensory descriptors.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="project-separator">
+
+        <!-- Project 2: Smart Street Light Web Dashboard -->
+        <div class="project-wrapper reverse">
+          <div class="project-details">
+            <span class="project-tag">Full-Stack IoT Dashboard</span>
+            <h3 class="project-title">Smart Street Light Web Dashboard</h3>
+            <p class="project-description">
+              A full-stack tracking interface built to manage localized IoT sensor nodes. Uses a Django REST backend to
+              serve time-series power consumption metrics to a dynamic React dashboard interface.
+            </p>
+            <div class="project-tech-stack">
+              <span class="tech-tag">Django REST</span>
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">IoT Gateway</span>
+              <span class="tech-tag">Time-series</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/street-light-dashboard" target="_blank" rel="noopener noreferrer"
+                class="btn btn-outline btn-sm icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="link-svg">
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                  </path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+                GitHub Repo
+              </a>
+            </div>
+          </div>
+          <!-- Project 2 Interactive Widget: Live IoT Dashboard -->
+          <div class="project-widget">
+            <div class="widget-container dashboard-widget">
+              <div class="dashboard-header">
+                <div class="dashboard-branding">
+                  <span class="pulse-node"></span>
+                  <h4>IoT-Node: Grid-South-A2</h4>
+                </div>
+                <div class="dashboard-controls">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="eco-mode-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="toggle-label">Eco-Savings</span>
+                </div>
+              </div>
+
+              <div class="metric-cards">
+                <div class="mini-card">
+                  <span class="card-label">Current Load</span>
+                  <span class="card-val" id="val-load">42.5 W</span>
+                </div>
+                <div class="mini-card">
+                  <span class="card-label">Savings Factor</span>
+                  <span class="card-val text-success" id="val-savings">1.0x</span>
+                </div>
+                <div class="mini-card">
+                  <span class="card-label">Node Status</span>
+                  <span class="card-val text-online">Active</span>
+                </div>
+              </div>
+
+              <!-- Time Series Canvas Chart -->
+              <div class="chart-container">
+                <canvas id="iot-chart"></canvas>
+              </div>
+              <div class="chart-footer">
+                <span>Dynamic time-series updates from Django REST simulation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="project-separator">
+
+        <!-- Project 3: AI Project Report Generator -->
+        <div class="project-wrapper">
+          <div class="project-details">
+            <span class="project-tag">Pure Frontend Client Utility</span>
+            <h3 class="project-title">AI Project Report Generator</h3>
+            <p class="project-description">
+              A pure frontend utility that takes an uploaded directory ZIP file, extracts source code completely
+              in-browser via the JSZip library, and formats structural contexts to auto-build Markdown documentation
+              templates.
+            </p>
+            <div class="project-tech-stack">
+              <span class="tech-tag">JSZip</span>
+              <span class="tech-tag">React / JS</span>
+              <span class="tech-tag">Markdown Parser</span>
+              <span class="tech-tag">File System API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/project-report-generator" target="_blank"
+                rel="noopener noreferrer" class="btn btn-outline btn-sm icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="link-svg">
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                  </path>
+                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                </svg>
+                GitHub Repo
+              </a>
+            </div>
+          </div>
+          <!-- Project 3 Interactive Widget: ZIP Extractor & MD Builder -->
+          <div class="project-widget">
+            <div class="widget-container zip-widget">
+              <div class="zip-dropzone" id="zip-dropzone">
+                <div class="dropzone-default" id="dropzone-idle">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="zip-svg">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <p>Drag & drop <strong>project.zip</strong> or click below to simulate</p>
+                  <button class="btn btn-secondary btn-sm" id="btn-simulate-zip">Simulate Zip Upload</button>
+                </div>
+
+                <div class="dropzone-processing hide" id="dropzone-running">
+                  <div class="spinner"></div>
+                  <h4 class="process-title">Extracting with JSZip...</h4>
+                  <div class="console-logs" id="zip-console-logs">
+                    <!-- Dynamic logs -->
+                  </div>
+                </div>
+
+                <div class="dropzone-result hide" id="dropzone-completed">
+                  <div class="result-header">
+                    <span class="text-success">✔ report_template.md generated!</span>
+                    <button class="btn btn-outline btn-xs" id="btn-reset-zip">Reset</button>
+                  </div>
+                  <pre class="markdown-preview" id="md-preview-content">
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h2 class="contact-title font-title">Let's build something practical.</h2>
+          <p class="contact-desc">
+            Whether you want to discuss Python backends, automation scripts, IoT applications, or general project
+            collaborations, feel free to drop a message.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com/Anaswin" target="_blank" rel="noopener noreferrer" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                </path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/anaswin-raj" target="_blank" rel="noopener noreferrer"
+              class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect width="4" height="12" x="2" y="9"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </a>
+            <a href="mailto:kanaswinraj695@gmail.com" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+          <form class="contact-form" id="contact-form">
+            <div class="form-group">
+              <label for="form-name">Name</label>
+              <input type="text" id="form-name" required placeholder="John Doe" maxlength="100">
+            </div>
+            <div class="form-group">
+              <label for="form-email">Email Address</label>
+              <input type="email" id="form-email" required placeholder="john@example.com" maxlength="100">
+            </div>
+            <div class="form-group">
+              <label for="form-message">Message</label>
+              <textarea id="form-message" required rows="4" placeholder="Hi Anaswin, let's collaborate on..."
+                maxlength="1000"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Transmission</button>
+          </form>
+
+          <!-- Interactive Console Output for the Form -->
+          <div class="console-box" id="form-console">
+            <div class="console-title-bar">
+              <span class="console-status-dot"></span>
+              <span>form-daemon.service</span>
+            </div>
+            <div class="console-body" id="form-console-body">
+              <div class="console-log-line">systemctl status form-daemon.service... [READY]</div>
+              <div class="console-log-line text-muted">Awaiting local input submission payload...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <p>© 2026 K Anaswin Raj. All rights reserved.</p>
+      <p class="footer-tagline">Built with Vanilla HTML, CSS, and JS (No Boilerplate).</p>
+    </div>
+  </footer>
+
+  <!-- JS Logic Script -->
+  <script src="app.js"></script>
+</body>
+
+</html>
