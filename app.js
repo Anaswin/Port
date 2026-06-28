@@ -2,6 +2,9 @@
    INTERACTIVE LOGIC: K Anaswin Raj Portfolio
    ========================================================================== */
 
+// Web3Forms Access Key (Get a free key from https://web3forms.com/ to activate the contact form)
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+
 // HTML Escaping Utility to prevent XSS
 function escapeHTML(str) {
   if (typeof str !== 'string') return '';
@@ -67,6 +70,7 @@ Available Commands:
   <span class="code-hl">about</span>      - Professional summary
   <span class="code-hl">skills</span>     - Core technology stack
   <span class="code-hl">projects</span>   - Detailed project portfolio
+  <span class="code-hl">resume</span>     - Download PDF resume
   <span class="code-hl">contact</span>    - Connect options & social links
   <span class="code-hl">clear</span>      - Clear terminal console screen
   <span class="code-hl">github</span>     - Link to Anaswin's GitHub profile
@@ -91,6 +95,22 @@ Philosophy: "Prefer building practical scripts over typing endless boilerplate."
   3. <strong>AI Project Report Generator</strong> (Frontend Compiler Utility)
      - Zip extraction in-browser, templates compilation.
     `,
+    resume: () => {
+      setTimeout(() => {
+        const link = document.createElement('a');
+        link.href = 'resume.pdf';
+        link.download = 'K_Anaswin_Raj_Resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, 1200);
+      return `
+<strong>[GET] /assets/resume.pdf...</strong>
+  <span class="text-muted">File Size: 1.2 MB | MIME-Type: application/pdf</span>
+  <span class="text-success">✔ Handshake verified. Fetching payload...</span>
+  <span class="code-hl">Initializing secure download. Please check your downloads folder.</span>
+      `;
+    },
     contact: () => `
 <strong>Connect with Anaswin:</strong>
   - Email: <a href="mailto:kanaswinraj695@gmail.com" style="color: var(--accent-teal);">kanaswinraj695@gmail.com</a>
@@ -480,6 +500,7 @@ Project documentation compiler successfully run at 2026-06-26.
     
     const name = document.getElementById('form-name').value;
     const email = document.getElementById('form-email').value;
+    const message = document.getElementById('form-message').value;
     
     // Initial submission printout
     formConsoleBody.innerHTML = `
@@ -487,29 +508,200 @@ Project documentation compiler successfully run at 2026-06-26.
       <div class="console-log-line">[SMTP] Handshaking: mail.anaswin.dev:465...</div>
     `;
 
+    // Step 1: Handshake log
     setTimeout(() => {
       const line = document.createElement('div');
       line.className = 'console-log-line';
       line.textContent = '[SMTP] TLS 1.3 secured socket channel established.';
       formConsoleBody.appendChild(line);
-    }, 600);
+    }, 400);
 
+    // Step 2: Transmission log & Fetch start
     setTimeout(() => {
       const line = document.createElement('div');
       line.className = 'console-log-line';
       line.innerHTML = `[DAEMON] Transmitting content body for <span style="color:var(--accent-teal);">${escapeHTML(name)}</span> (${escapeHTML(email)})...`;
       formConsoleBody.appendChild(line);
-    }, 1200);
 
-    setTimeout(() => {
-      const line = document.createElement('div');
-      line.className = 'console-log-line text-success';
-      line.textContent = '✔ SUCCESS: Transmission completed. Return envelope ID: smtp_msg_9a2f8c.';
-      formConsoleBody.appendChild(line);
-      
-      // Reset inputs
-      contactForm.reset();
-    }, 2000);
+      // Honeypot spam filter check
+      const isBot = document.getElementById('contact-honeypot').checked;
+      if (isBot) {
+        setTimeout(() => {
+          const errLine = document.createElement('div');
+          errLine.className = 'console-log-line text-alert';
+          errLine.innerHTML = '✖ ERROR: Spam transmission detected. Payload discarded.';
+          formConsoleBody.appendChild(errLine);
+        }, 500);
+        return;
+      }
+
+      // Check if access key is configured
+      if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+        setTimeout(() => {
+          const errLine = document.createElement('div');
+          errLine.className = 'console-log-line text-alert';
+          errLine.innerHTML = '✖ ERROR: Transmission failed. Web3Forms access key is not configured. Please add your key to app.js.';
+          formConsoleBody.appendChild(errLine);
+        }, 600);
+        return;
+      }
+
+      // Perform real email submission via fetch
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: name,
+          email: email,
+          message: message,
+          subject: `New Portfolio Message from ${name}`,
+          botcheck: isBot
+        })
+      })
+      .then(async (response) => {
+        const json = await response.json();
+        if (response.status === 200) {
+          const succLine = document.createElement('div');
+          succLine.className = 'console-log-line text-success';
+          succLine.textContent = `✔ SUCCESS: Transmission completed. Message delivered to inbox. ID: ${json.id || 'smtp_msg_ok'}`;
+          formConsoleBody.appendChild(succLine);
+          contactForm.reset();
+        } else {
+          throw new Error(json.message || 'Server error');
+        }
+      })
+      .catch((error) => {
+        const errLine = document.createElement('div');
+        errLine.className = 'console-log-line text-alert';
+        errLine.innerHTML = `✖ ERROR: Transmission failed: ${escapeHTML(error.message)}`;
+        formConsoleBody.appendChild(errLine);
+      });
+
+    }, 800);
   });
+
+  // ==========================================================================
+  // HERO MATRIX BACKGROUND ANIMATION
+  // ==========================================================================
+  const mCanvas = document.getElementById('hero-canvas');
+  if (mCanvas) {
+    const mCtx = mCanvas.getContext('2d');
+    
+    let mWidth = (mCanvas.width = mCanvas.offsetWidth || window.innerWidth);
+    let mHeight = (mCanvas.height = mCanvas.offsetHeight || window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      mWidth = (mCanvas.width = window.innerWidth);
+      mHeight = (mCanvas.height = window.innerHeight);
+    });
+
+    const mColumns = Math.floor(mWidth / 20) + 1;
+    const mYPositions = Array(mColumns).fill(0).map(() => Math.floor(Math.random() * -100));
+
+    const mCharacters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[];:';
+    
+    function drawMatrix() {
+      mCtx.fillStyle = 'rgba(9, 11, 16, 0.05)';
+      mCtx.fillRect(0, 0, mWidth, mHeight);
+
+      mCtx.font = '13px "JetBrains Mono", monospace';
+
+      for (let i = 0; i < mYPositions.length; i++) {
+        const char = mCharacters[Math.floor(Math.random() * mCharacters.length)];
+        const x = i * 20;
+        const y = mYPositions[i];
+
+        // Alternate between accent teal and violet gradients
+        if (i % 2 === 0) {
+          mCtx.fillStyle = 'rgba(0, 242, 254, 0.45)';
+        } else {
+          mCtx.fillStyle = 'rgba(155, 81, 224, 0.45)';
+        }
+
+        mCtx.fillText(char, x, y);
+
+        if (y > mHeight && Math.random() > 0.98) {
+          mYPositions[i] = 0;
+        } else {
+          mYPositions[i] = y + 16;
+        }
+      }
+    }
+
+    setInterval(drawMatrix, 40);
+  }
+
+  // ==========================================================================
+  // LIVE SYSTEM METRICS LOGIC
+  // ==========================================================================
+  const metricsStatus = document.getElementById('metrics-status');
+  const metricsPing = document.getElementById('metrics-ping');
+  const metricsUptime = document.getElementById('metrics-uptime');
+  const metricsBrowser = document.getElementById('metrics-browser');
+
+  if (metricsStatus && metricsPing && metricsUptime && metricsBrowser) {
+    // 1. Session Uptime Clock
+    let uptimeSeconds = 0;
+    setInterval(() => {
+      uptimeSeconds++;
+      const hrs = String(Math.floor(uptimeSeconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((uptimeSeconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(uptimeSeconds % 60).padStart(2, '0');
+      metricsUptime.textContent = `${hrs}:${mins}:${secs}`;
+    }, 1000);
+
+    // 2. Simulated Network Latency (Ping)
+    setInterval(() => {
+      if (navigator.onLine) {
+        const simulatedPing = Math.floor(Math.random() * 19) + 10; // 10ms to 28ms
+        metricsPing.textContent = `${simulatedPing} ms`;
+      } else {
+        metricsPing.textContent = '-- ms';
+      }
+    }, 2500);
+
+    // 3. Online/Offline Connection Status
+    function updateConnectionStatus() {
+      if (navigator.onLine) {
+        metricsStatus.textContent = 'ONLINE';
+        metricsStatus.className = 'metric-value text-success';
+      } else {
+        metricsStatus.textContent = 'OFFLINE';
+        metricsStatus.className = 'metric-value text-alert';
+        metricsPing.textContent = '-- ms';
+      }
+    }
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+    updateConnectionStatus(); // Initial run
+
+    // 4. Visitor Browser & OS Information
+    function detectVisitorDetails() {
+      const ua = navigator.userAgent;
+      let osName = 'Unknown OS';
+      let browserName = 'Unknown Browser';
+
+      // Simple OS Detection
+      if (ua.indexOf('Win') !== -1) osName = 'Win';
+      else if (ua.indexOf('Mac') !== -1) osName = 'Mac';
+      else if (ua.indexOf('Linux') !== -1) osName = 'Linux';
+      else if (ua.indexOf('Android') !== -1) osName = 'Android';
+      else if (ua.indexOf('like Mac') !== -1) osName = 'iOS';
+
+      // Simple Browser Detection
+      if (ua.indexOf('Chrome') !== -1 && ua.indexOf('Edge') === -1) browserName = 'Chrome';
+      else if (ua.indexOf('Safari') !== -1 && ua.indexOf('Chrome') === -1) browserName = 'Safari';
+      else if (ua.indexOf('Firefox') !== -1) browserName = 'Firefox';
+      else if (ua.indexOf('Edge') !== -1) browserName = 'Edge';
+      else if (ua.indexOf('Opera') !== -1 || ua.indexOf('OPR') !== -1) browserName = 'Opera';
+
+      metricsBrowser.textContent = `${browserName}/${osName}`;
+    }
+    detectVisitorDetails();
+  }
 
 });

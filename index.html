@@ -8,7 +8,7 @@
   <meta name="description"
     content="Portfolio of K Anaswin Raj, a final-year MCA student focusing on core software development, web tools, automated dashboards, and data-driven backends.">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+    content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.web3forms.com;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Google Fonts -->
@@ -46,6 +46,7 @@
 
   <!-- Hero & Terminal Section -->
   <section id="home" class="hero-section">
+    <canvas id="hero-canvas"></canvas>
     <div class="hero-bg-glow"></div>
     <div class="container hero-container">
 
@@ -99,6 +100,25 @@
             <span class="term-prompt">guest@anaswin.dev:~$</span>
             <input type="text" id="terminal-input" autocomplete="off" autofocus placeholder="Type a command..."
               maxlength="500">
+          </div>
+        </div>
+        <!-- System Metrics Widget -->
+        <div class="terminal-metrics-bar">
+          <div class="metric-item">
+            <span class="metric-label">STATUS</span>
+            <span class="metric-value text-success" id="metrics-status">ONLINE</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">LATENCY</span>
+            <span class="metric-value" id="metrics-ping">-- ms</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">SESSION UPTIME</span>
+            <span class="metric-value" id="metrics-uptime">00:00:00</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">VISITOR INFO</span>
+            <span class="metric-value" id="metrics-browser">Detecting...</span>
           </div>
         </div>
       </div>
@@ -570,6 +590,9 @@
 
         <div class="contact-form-wrapper">
           <form class="contact-form" id="contact-form">
+            <!-- Honeypot Spam Protection -->
+            <input type="checkbox" name="botcheck" id="contact-honeypot" style="display: none;" autocomplete="off">
+            
             <div class="form-group">
               <label for="form-name">Name</label>
               <input type="text" id="form-name" required placeholder="John Doe" maxlength="100">

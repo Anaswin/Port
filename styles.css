@@ -1446,3 +1446,70 @@ input:checked + .slider:before {
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   FEATURE ADDITIONS: CANVAS MATRIX & METRICS WIDGET
+   ========================================================================== */
+
+#hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.terminal-metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  background: rgba(14, 18, 27, 0.65);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: var(--transition-normal);
+}
+
+.terminal-metrics-bar:hover {
+  border-color: rgba(var(--accent-teal-rgb), 0.15);
+  box-shadow: 0 4px 25px rgba(0, 242, 254, 0.03);
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.metric-label {
+  color: var(--text-muted);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  color: var(--accent-teal);
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+/* Small adjustments for metrics bar on mobile screens */
+@media (max-width: 480px) {
+  .terminal-metrics-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
