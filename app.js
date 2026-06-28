@@ -71,6 +71,8 @@ Available Commands:
   <span class="code-hl">skills</span>     - Core technology stack
   <span class="code-hl">projects</span>   - Detailed project portfolio
   <span class="code-hl">resume</span>     - Download PDF resume
+  <span class="code-hl">timeline</span>   - View ASCII git-graph timeline
+  <span class="code-hl">history</span>    - List command history log
   <span class="code-hl">contact</span>    - Connect options & social links
   <span class="code-hl">joke</span>       - Get a random developer joke
   <span class="code-hl">secret</span>     - Access classified specs
@@ -151,6 +153,26 @@ Anaswin's Secret Specs:
         ? '<span class="text-success">[SYSTEM] Matrix Digital Rain Overlay Override Initiated. Theme set to MATRIX GREEN.</span>'
         : '<span class="text-success">[SYSTEM] Global theme reset to Slate Dark.</span>';
     },
+    history: () => {
+      if (commandHistory.length === 0) return '<span class="text-muted">No commands in session history.</span>';
+      return commandHistory
+        .map((cmd, idx) => `  ${idx + 1}  <span class="code-hl">${escapeHTML(cmd)}</span>`)
+        .join('<br>');
+    },
+    timeline: () => `
+<span class="text-gradient"><strong>--- ANASWIN'S SYSTEM LOGS (GIT GRAPH) ---</strong></span><br>
+<span style="color:#ff5f56; font-weight:bold;">*</span>  <span style="color:var(--accent-teal); font-weight:bold;">[main]</span> <span class="text-success">MCA-2026: Master of Computer Applications (Final Year)</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>  <span class="text-secondary">Core specs: Python automation scripts, React dashboards, async APIs.</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>
+<span style="color:#ff5f56; font-weight:bold;">*</span>  <span style="color:var(--accent-violet); font-weight:bold;">[feature/nlp]</span> <span class="text-success">2025: Chrome NLP Credibility scanner built</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>  <span class="text-secondary">Leveraged NLTK tokenizers, DOM node queries, and score matrix models.</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>
+<span style="color:#ff5f56; font-weight:bold;">*</span>  <span style="color:var(--accent-violet); font-weight:bold;">[feature/iot]</span> <span class="text-success">2024: Street Light Web dashboard dashboard deployed</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>  <span class="text-secondary">Linked React time-series graphics, Django REST controllers, sensor relays.</span>
+<span style="color:#ff5f56; font-weight:bold;">|</span>
+<span style="color:#ff5f56; font-weight:bold;">*</span>  <span style="color:var(--accent-teal); font-weight:bold;">[main]</span> <span class="text-success">GRAD-2024: Completed Bachelor of Computer Applications (BCA)</span>
+<span style="color:var(--text-muted); font-weight:bold;">&nbsp;  Focused on SQL optimization, core Java, and database schemas.</span>
+    `,
     contact: () => `
 <strong>Connect with Anaswin:</strong>
   - Email: <a href="mailto:kanaswinraj695@gmail.com" style="color: var(--accent-teal);">kanaswinraj695@gmail.com</a>
@@ -249,6 +271,29 @@ Anaswin's Secret Specs:
       } else {
         historyIndex = commandHistory.length;
         terminalInput.value = '';
+      }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      const inputVal = terminalInput.value.trim().toLowerCase();
+      if (inputVal) {
+        const matchingCmd = Object.keys(commands).find(cmd => cmd.startsWith(inputVal));
+        if (matchingCmd) {
+          terminalInput.value = matchingCmd;
+        }
+      }
+    }
+  });
+
+  // Command Click Shortcut Delegation
+  terminalBody.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.classList.contains('code-hl') || target.classList.contains('command-shortcut')) {
+      const command = target.textContent.trim().replace(/['"]/g, '');
+      if (command && commands[command]) {
+        terminalInput.value = command;
+        processCommand(command);
+        terminalInput.value = '';
+        terminalInput.focus();
       }
     }
   });

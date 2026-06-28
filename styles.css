@@ -1629,3 +1629,78 @@ body.matrix-theme .skill-card:hover {
   border-color: #00ff00 !important;
   box-shadow: 0 0 15px rgba(0, 255, 0, 0.1) !important;
 }
+
+/* ==========================================================================
+   FEATURE ADDITIONS: SKILL TOOLTIPS & CLICKABLE COMMANDS
+   ========================================================================== */
+
+/* Clickable Code Blocks */
+.code-hl, .command-shortcut {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Skill tooltips positioning & layout */
+.skills-list li {
+  position: relative;
+}
+
+.skill-info {
+  position: relative;
+}
+
+.skill-info[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 135%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(14, 18, 27, 0.94);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.skill-info[data-tooltip]::after {
+  content: '';
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(14, 18, 27, 0.94) transparent transparent transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.skill-info[data-tooltip]:hover::before,
+.skill-info[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Matrix Mode tooltip adjustments */
+body.matrix-theme .skill-info[data-tooltip]::before {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: #00ff00;
+  color: #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.15);
+}
+
+body.matrix-theme .skill-info[data-tooltip]::after {
+  border-color: rgba(0, 0, 0, 0.95) transparent transparent transparent;
+}
