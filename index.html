@@ -301,10 +301,17 @@
           data.</p>
       </div>
 
+      <!-- Project Filters -->
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web & Extensions</button>
+        <button class="filter-btn" data-filter="iot">IoT & Full-Stack</button>
+      </div>
+
       <div class="projects-container">
 
         <!-- Project 1: Fake News Detector -->
-        <div class="project-wrapper">
+        <div class="project-wrapper" data-category="web">
           <div class="project-details">
             <span class="project-tag">Chrome Extension / NLP</span>
             <h3 class="project-title">Fake News Detector</h3>
@@ -403,7 +410,7 @@
         <hr class="project-separator">
 
         <!-- Project 2: Smart Street Light Web Dashboard -->
-        <div class="project-wrapper reverse">
+        <div class="project-wrapper reverse" data-category="iot">
           <div class="project-details">
             <span class="project-tag">Full-Stack IoT Dashboard</span>
             <h3 class="project-title">Smart Street Light Web Dashboard</h3>
@@ -478,7 +485,7 @@
         <hr class="project-separator">
 
         <!-- Project 3: AI Project Report Generator -->
-        <div class="project-wrapper">
+        <div class="project-wrapper" data-category="web">
           <div class="project-details">
             <span class="project-tag">Pure Frontend Client Utility</span>
             <h3 class="project-title">AI Project Report Generator</h3>

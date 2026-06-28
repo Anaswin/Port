@@ -72,6 +72,9 @@ Available Commands:
   <span class="code-hl">projects</span>   - Detailed project portfolio
   <span class="code-hl">resume</span>     - Download PDF resume
   <span class="code-hl">contact</span>    - Connect options & social links
+  <span class="code-hl">joke</span>       - Get a random developer joke
+  <span class="code-hl">secret</span>     - Access classified specs
+  <span class="code-hl">matrix</span>     - Toggle Matrix rain terminal theme
   <span class="code-hl">clear</span>      - Clear terminal console screen
   <span class="code-hl">github</span>     - Link to Anaswin's GitHub profile
     `,
@@ -110,6 +113,32 @@ Philosophy: "Prefer building practical scripts over typing endless boilerplate."
   <span class="text-success">✔ Handshake verified. Fetching payload...</span>
   <span class="code-hl">Initializing secure download. Please check your downloads folder.</span>
       `;
+    },
+    joke: () => {
+      const jokes = [
+        "Why do programmers wear glasses? Because they can't C#.",
+        "There are 10 types of people in this world: Those who understand binary, and those who don't.",
+        "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+        "A SQL query goes into a bar, walks up to two tables and asks: 'Can I join you?'",
+        "Why did the database administrator leave his wife? She had one-to-many relationships."
+      ];
+      const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+      return `<span class="text-success">${randomJoke}</span>`;
+    },
+    secret: () => `
+<span class="text-gradient"><strong>*** CLASSIFIED: ACCESS GRANTED ***</strong></span>
+Anaswin's Secret Specs:
+- Coffee consumed per lines of code: 1.2 cups/100 LOC.
+- Favorite text editor: JetBrains / VS Code (obviously).
+- Superpower: Automating Excel sheets into Web dashboards.
+- Hidden Talent: Solving 3x3 Rubik's cube in under 40 seconds.
+    `,
+    matrix: () => {
+      document.body.classList.toggle('matrix-theme');
+      const active = document.body.classList.contains('matrix-theme');
+      return active 
+        ? '<span class="text-success">[SYSTEM] Matrix Digital Rain Overlay Override Initiated. Theme set to MATRIX GREEN.</span>'
+        : '<span class="text-success">[SYSTEM] Global theme reset to Slate Dark.</span>';
     },
     contact: () => `
 <strong>Connect with Anaswin:</strong>
@@ -153,10 +182,32 @@ Philosophy: "Prefer building practical scripts over typing endless boilerplate."
           terminalBody.appendChild(responseLine);
         }
       } else if (trimmed.startsWith('sudo')) {
-        responseLine.innerHTML = trimmed === 'sudo hack' 
-          ? `<span class="text-alert">Access Denied. Nice try though!</span>` 
-          : `<span class="text-alert">Error: guest does not have root privileges.</span>`;
-        terminalBody.appendChild(responseLine);
+        if (trimmed === 'sudo hack') {
+          responseLine.innerHTML = '<span class="code-hl">[DAEMON] Bypassing security firewalls...</span>';
+          terminalBody.appendChild(responseLine);
+          
+          const hackSteps = [
+            'Connecting to remote proxy relay... [OK]',
+            'Cracking root SSH key exchange... [PENDING]',
+            'Injecting system buffer overflow payload... [SUCCESS]',
+            'Extracting core credentials: /etc/shadow... [WARNING]',
+            '<span class="text-alert">❌ DETECTED: Intrusion Countermeasures Electronics (ICE) triggered.</span>',
+            '<span class="text-alert">🔒 Connection Terminated: Guest identity locked. Nice try!</span>'
+          ];
+
+          hackSteps.forEach((step, idx) => {
+            setTimeout(() => {
+              const logLine = document.createElement('div');
+              logLine.className = 'terminal-line';
+              logLine.innerHTML = step;
+              terminalBody.appendChild(logLine);
+              terminalBody.scrollTop = terminalBody.scrollHeight;
+            }, (idx + 1) * 500);
+          });
+        } else {
+          responseLine.innerHTML = `<span class="text-alert">Error: guest does not have root privileges. This incident will be reported.</span>`;
+          terminalBody.appendChild(responseLine);
+        }
       } else {
         responseLine.innerHTML = `command not found: <span class="text-alert">${escapeHTML(trimmed)}</span>. Type <span class="code-hl">help</span> to list commands.`;
         terminalBody.appendChild(responseLine);
@@ -703,5 +754,42 @@ Project documentation compiler successfully run at 2026-06-26.
     }
     detectVisitorDetails();
   }
+
+  // ==========================================================================
+  // INTERACTIVE PROJECT FILTER
+  // ==========================================================================
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectWrappers = document.querySelectorAll('.project-wrapper');
+  const separators = document.querySelectorAll('.project-separator');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Toggle active classes on buttons
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-filter');
+
+      projectWrappers.forEach(wrapper => {
+        const categories = wrapper.getAttribute('data-category').split(' ');
+        
+        // Show/hide wrappers
+        if (filterValue === 'all' || categories.includes(filterValue)) {
+          wrapper.classList.remove('hide');
+        } else {
+          wrapper.classList.add('hide');
+        }
+      });
+
+      // Handle separators: hide them if filtering is active, or show them if "all" is active
+      separators.forEach(sep => {
+        if (filterValue === 'all') {
+          sep.classList.remove('hide');
+        } else {
+          sep.classList.add('hide');
+        }
+      });
+    });
+  });
 
 });

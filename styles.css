@@ -1513,3 +1513,119 @@ input:checked + .slider:before {
     gap: 12px;
   }
 }
+
+/* ==========================================================================
+   FEATURE ADDITIONS: PROJECT FILTERS & MATRIX EASTER EGG
+   ========================================================================== */
+
+/* Project Filters */
+.project-filters {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 550;
+  font-size: 0.9rem;
+  padding: 8px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  outline: none;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(var(--accent-teal-rgb), 0.1);
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+  transform: translateY(-1px);
+}
+
+.project-wrapper {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.project-wrapper.hide, .project-separator.hide {
+  display: none !important;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+}
+
+/* Matrix Easter Egg Mode Override */
+body.matrix-theme {
+  --bg-dark: #000000;
+  --bg-deep: #050505;
+  --text-primary: #00ff00;
+  --text-secondary: #00cc00;
+  --text-muted: #007700;
+  --accent-teal: #00ff00;
+  --accent-teal-rgb: 0, 255, 0;
+  --accent-violet: #00aa00;
+  --accent-violet-rgb: 0, 170, 0;
+  --card-bg: rgba(0, 0, 0, 0.95);
+  --card-border: rgba(0, 255, 0, 0.25);
+  --card-hover-border: #00ff00;
+}
+
+body.matrix-theme ::selection {
+  background: rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+}
+
+body.matrix-theme .brand-text,
+body.matrix-theme .text-gradient,
+body.matrix-theme .hero-title span,
+body.matrix-theme .section-title {
+  background: none !important;
+  -webkit-text-fill-color: #00ff00 !important;
+  color: #00ff00 !important;
+}
+
+body.matrix-theme .btn-primary {
+  background: #000000;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
+}
+
+body.matrix-theme .btn-primary:hover {
+  background: #00ff00;
+  color: #000000;
+  box-shadow: 0 0 20px #00ff00;
+}
+
+body.matrix-theme .btn-outline {
+  border-color: #00aa00;
+  color: #00ff00;
+}
+
+body.matrix-theme .btn-outline:hover {
+  border-color: #00ff00;
+  box-shadow: 0 0 12px #00ff00;
+}
+
+body.matrix-theme #hero-canvas {
+  opacity: 0.35 !important;
+}
+
+body.matrix-theme .terminal-card, 
+body.matrix-theme .widget-container,
+body.matrix-theme .console-box,
+body.matrix-theme .skill-card {
+  border-color: rgba(0, 255, 0, 0.3) !important;
+}
+
+body.matrix-theme .terminal-card:hover, 
+body.matrix-theme .widget-container:hover,
+body.matrix-theme .console-box:hover,
+body.matrix-theme .skill-card:hover {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.1) !important;
+}
