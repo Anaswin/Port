@@ -120,7 +120,18 @@ Philosophy: "Prefer building practical scripts over typing endless boilerplate."
         "There are 10 types of people in this world: Those who understand binary, and those who don't.",
         "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
         "A SQL query goes into a bar, walks up to two tables and asks: 'Can I join you?'",
-        "Why did the database administrator leave his wife? She had one-to-many relationships."
+        "Why did the database administrator leave his wife? She had one-to-many relationships.",
+        "['hip', 'hip'] (hip hip array!)",
+        "Why do programmers prefer dark mode? Because light attracts bugs.",
+        "To understand what recursion is, you must first understand recursion.",
+        "An optimist says: 'The glass is half full.' A pessimist says: 'The glass is half empty.' A programmer says: 'The glass is twice as large as it needs to be.'",
+        "What's the object-oriented way to become wealthy? Inheritance.",
+        "What do you call a programmer from Finland? Nerdic.",
+        "A programmer's spouse asks: 'Go to the store and buy a loaf of bread. If they have eggs, get a dozen.' The programmer returns with 12 loaves of bread.",
+        "What is the best thing about UDP? I'd tell you a joke, but you might not get it.",
+        "What is a database administrator's favorite song? 'No SQL, No Cry'.",
+        "Debugging is like being the detective in a crime movie where you are also the murderer.",
+        "There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors."
       ];
       const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
       return `<span class="text-success">${randomJoke}</span>`;
