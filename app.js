@@ -28,6 +28,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.nav-link');
   
+  // Hamburger Menu Drawer Logic
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinksContainer = document.getElementById('nav-links');
+  
+  if (navToggle && navLinksContainer) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', !expanded);
+      navLinksContainer.classList.toggle('open');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navLinksContainer.classList.contains('open') && !navLinksContainer.contains(e.target) && e.target !== navToggle) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinksContainer.classList.remove('open');
+      }
+    });
+
+    // Close menu when clicking any nav link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinksContainer.classList.remove('open');
+      });
+    });
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinksContainer.classList.contains('open')) {
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinksContainer.classList.remove('open');
+        navToggle.focus();
+      }
+    });
+  }
+  
   const observerOptions = {
     root: null,
     rootMargin: '-50% 0px -50% 0px', // Trigger when section occupies the middle of viewport
@@ -67,18 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const commands = {
     help: () => `
 Available Commands:
-  <span class="code-hl">about</span>      - Professional summary
-  <span class="code-hl">skills</span>     - Core technology stack
-  <span class="code-hl">projects</span>   - Detailed project portfolio
-  <span class="code-hl">resume</span>     - Download PDF resume
-  <span class="code-hl">timeline</span>   - View ASCII git-graph timeline
-  <span class="code-hl">history</span>    - List command history log
-  <span class="code-hl">contact</span>    - Connect options & social links
-  <span class="code-hl">joke</span>       - Get a random developer joke
-  <span class="code-hl">secret</span>     - Access classified specs
-  <span class="code-hl">matrix</span>     - Toggle Matrix rain terminal theme
-  <span class="code-hl">clear</span>      - Clear terminal console screen
-  <span class="code-hl">github</span>     - Link to Anaswin's GitHub profile
+  <span class="code-hl command-shortcut" tabindex="0" role="button">about</span>      - Professional summary
+  <span class="code-hl command-shortcut" tabindex="0" role="button">skills</span>     - Core technology stack
+  <span class="code-hl command-shortcut" tabindex="0" role="button">projects</span>   - Detailed project portfolio
+  <span class="code-hl command-shortcut" tabindex="0" role="button">resume</span>     - Download PDF resume
+  <span class="code-hl command-shortcut" tabindex="0" role="button">timeline</span>   - View ASCII git-graph timeline
+  <span class="code-hl command-shortcut" tabindex="0" role="button">history</span>    - List command history log
+  <span class="code-hl command-shortcut" tabindex="0" role="button">contact</span>    - Connect options & social links
+  <span class="code-hl command-shortcut" tabindex="0" role="button">joke</span>       - Get a random developer joke
+  <span class="code-hl command-shortcut" tabindex="0" role="button">secret</span>     - Access classified specs
+  <span class="code-hl command-shortcut" tabindex="0" role="button">matrix</span>     - Toggle Matrix rain terminal theme
+  <span class="code-hl command-shortcut" tabindex="0" role="button">clear</span>      - Clear terminal console screen
+  <span class="code-hl command-shortcut" tabindex="0" role="button">github</span>     - Link to Anaswin's GitHub profile
     `,
     about: () => `
 <strong>K Anaswin Raj</strong> - Final-year MCA student.
@@ -156,7 +194,7 @@ Anaswin's Secret Specs:
     history: () => {
       if (commandHistory.length === 0) return '<span class="text-muted">No commands in session history.</span>';
       return commandHistory
-        .map((cmd, idx) => `  ${idx + 1}  <span class="code-hl">${escapeHTML(cmd)}</span>`)
+        .map((cmd, idx) => `  ${idx + 1}  <span class="code-hl command-shortcut" tabindex="0" role="button">${escapeHTML(cmd)}</span>`)
         .join('<br>');
     },
     timeline: () => `
@@ -242,7 +280,7 @@ Anaswin's Secret Specs:
           terminalBody.appendChild(responseLine);
         }
       } else {
-        responseLine.innerHTML = `command not found: <span class="text-alert">${escapeHTML(trimmed)}</span>. Type <span class="code-hl">help</span> to list commands.`;
+        responseLine.innerHTML = `command not found: <span class="text-alert">${escapeHTML(trimmed)}</span>. Type <span class="code-hl command-shortcut" tabindex="0" role="button">help</span> to list commands.`;
         terminalBody.appendChild(responseLine);
       }
     }
@@ -284,16 +322,30 @@ Anaswin's Secret Specs:
     }
   });
 
-  // Command Click Shortcut Delegation
+  // Command Click/Keyboard Shortcut Delegation
+  function executeShortcut(target) {
+    const command = target.textContent.trim().replace(/['"]/g, '');
+    if (command && commands[command]) {
+      terminalInput.value = command;
+      processCommand(command);
+      terminalInput.value = '';
+      terminalInput.focus();
+    }
+  }
+
   terminalBody.addEventListener('click', (e) => {
     const target = e.target;
     if (target.classList.contains('code-hl') || target.classList.contains('command-shortcut')) {
-      const command = target.textContent.trim().replace(/['"]/g, '');
-      if (command && commands[command]) {
-        terminalInput.value = command;
-        processCommand(command);
-        terminalInput.value = '';
-        terminalInput.focus();
+      executeShortcut(target);
+    }
+  });
+
+  terminalBody.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const target = e.target;
+      if (target.classList.contains('code-hl') || target.classList.contains('command-shortcut')) {
+        e.preventDefault();
+        executeShortcut(target);
       }
     }
   });
@@ -384,15 +436,21 @@ Anaswin's Secret Specs:
     }
   });
 
-  // Resize canvas internally to prevent blurriness
+  // Resize canvas internally to prevent blurriness (High DPI support)
   function resizeCanvas() {
     const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.resetTransform();
+    ctx.scale(dpr, dpr);
   }
   
   resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    drawChart(); // Redraw immediately on resize
+  });
 
   // Time-series update loop
   setInterval(() => {
@@ -413,10 +471,12 @@ Anaswin's Secret Specs:
   }, 1200);
 
   function drawChart() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const dpr = window.devicePixelRatio || 1;
+    const width = canvas.width / dpr;
+    const height = canvas.height / dpr;
     
-    const width = canvas.width;
-    const height = canvas.height;
+    ctx.clearRect(0, 0, width, height);
+    
     const padding = 20;
     const chartHeight = height - padding * 2;
     const chartWidth = width - padding * 2;

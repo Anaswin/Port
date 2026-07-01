@@ -32,11 +32,17 @@
         <span class="brand-text">anaswin.dev</span>
         <span class="brand-bracket">/&gt;</span>
       </div>
-      <ul class="nav-links">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li class="nav-mobile-cta"><a href="#contact" class="btn btn-outline btn-sm">Get in Touch</a></li>
       </ul>
       <div class="nav-cta">
         <a href="#contact" class="btn btn-outline btn-sm">Get in Touch</a>
@@ -89,11 +95,11 @@
               Welcome to Anaswin's Interactive Shell (v1.0.2-LTS).
             </div>
             <div class="terminal-line system-msg">
-              Type <span class="code-hl command-shortcut">help</span> to list available commands and navigate the portfolio.
+              Type <span class="code-hl command-shortcut" tabindex="0" role="button">help</span> to list available commands and navigate the portfolio.
             </div>
             <div class="terminal-line">
               <span class="term-prompt">guest@anaswin.dev:~$</span>
-              <span class="term-command-hint">try typing "<span class="code-hl command-shortcut">skills</span>" or "<span class="code-hl command-shortcut">projects</span>"</span>
+              <span class="term-command-hint">try typing "<span class="code-hl command-shortcut" tabindex="0" role="button">skills</span>" or "<span class="code-hl command-shortcut" tabindex="0" role="button">projects</span>"</span>
             </div>
           </div>
           <div class="terminal-input-line">
