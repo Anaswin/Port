@@ -566,95 +566,295 @@ Anaswin's Secret Specs:
   setTimeout(drawChart, 200);
 
   // ==========================================================================
-  // WIDGET 3: AI Project Report Generator (Zip Extractor Simulation)
+  // WIDGET 3: Cloud Vault Simulator (Flask Cloud Storage Mockup)
   // ==========================================================================
-  const btnSimZip = document.getElementById('btn-simulate-zip');
-  const dropzoneIdle = document.getElementById('dropzone-idle');
-  const dropzoneRunning = document.getElementById('dropzone-running');
-  const dropzoneCompleted = document.getElementById('dropzone-completed');
-  const zipLogs = document.getElementById('zip-console-logs');
-  const mdPreview = document.getElementById('md-preview-content');
-  const btnResetZip = document.getElementById('btn-reset-zip');
   
-  const simulationLogs = [
-    { delay: 0, text: '[JSZip] Initializing file read system context...' },
-    { delay: 250, text: '[JSZip] Opening zip archive: project_src.zip (384 KB)...' },
-    { delay: 500, text: '[JSZip] File index loaded: 4 active source descriptors found.' },
-    { delay: 750, text: '[JSZip] → Extracting src/backend/main.py (3.8 KB)... [OK]' },
-    { delay: 1000, text: '[JSZip] → Extracting src/backend/models.py (2.1 KB)... [OK]' },
-    { delay: 1250, text: '[JSZip] → Extracting src/dashboard/App.js (4.6 KB)... [OK]' },
-    { delay: 1500, text: '[JSZip] → Extracting package.json (0.8 KB)... [OK]' },
-    { delay: 1750, text: '[JSZip] Unpacking complete. Passing contents to generator daemon...' },
-    { delay: 2000, text: '[AI-DocEngine] Building structural syntax AST maps...' },
-    { delay: 2250, text: '[AI-DocEngine] Documenting REST schemas and function contracts...' },
-    { delay: 2500, text: '[AI-DocEngine] Formatting template output as GFM Markdown...' }
+  // State variables
+  let activeFiles = [
+    { id: 1, name: "K_Anaswin_Raj_Resume.pdf", size: "1.2 MB", rawSize: 1.2, type: "pdf", icon: "📄" },
+    { id: 2, name: "backup_data.zip", size: "34.2 MB", rawSize: 34.2, type: "zip", icon: "📦" },
+    { id: 3, name: "portfolio_draft.png", size: "10.4 MB", rawSize: 10.4, type: "png", icon: "🖼️" }
+  ];
+  let trashFiles = [
+    { id: 4, name: "old_temp_draft.txt", size: "0.1 MB", rawSize: 0.1, type: "txt", icon: "📝", daysLeft: 28 }
+  ];
+  let selectedFileToShare = null;
+  let fileIdCounter = 5;
+
+  // DOM references
+  const btnVaultFilesTab = document.getElementById('btn-vault-files');
+  const btnVaultTrashTab = document.getElementById('btn-vault-trash');
+  const btnVaultUpload = document.getElementById('btn-vault-upload');
+  const vaultActiveList = document.getElementById('vault-active-list');
+  const vaultTrashList = document.getElementById('vault-trash-list');
+  const vaultTrashCount = document.getElementById('vault-trash-count');
+  const vaultStorageUsed = document.getElementById('vault-storage-used');
+  const vaultStorageFill = document.getElementById('vault-storage-fill');
+  const vaultConsoleLog = document.getElementById('vault-console-log');
+  
+  // Share Modal DOM
+  const vaultShareModal = document.getElementById('vault-share-modal');
+  const shareExpiry = document.getElementById('share-expiry');
+  const sharePassword = document.getElementById('share-password');
+  const shareResultContainer = document.getElementById('share-result-container');
+  const shareResultUrl = document.getElementById('share-result-url');
+  const btnCopyShare = document.getElementById('btn-copy-share');
+  const btnShareCancel = document.getElementById('btn-share-cancel');
+  const btnShareGenerate = document.getElementById('btn-share-generate');
+
+  // Logs utility
+  function addVaultLog(message, type = 'normal') {
+    const line = document.createElement('div');
+    line.className = 'vault-log-line';
+    if (type === 'success') line.classList.add('text-success');
+    if (type === 'alert') line.classList.add('text-alert');
+    if (type === 'warning') line.classList.add('text-muted');
+    
+    const timestamp = new Date().toLocaleTimeString();
+    line.innerHTML = `<span class="text-muted">[${timestamp}]</span> ${message}`;
+    vaultConsoleLog.appendChild(line);
+    vaultConsoleLog.scrollTop = vaultConsoleLog.scrollHeight;
+  }
+
+  // Render file system lists
+  function renderVault() {
+    // 1. Render Active Files
+    vaultActiveList.innerHTML = '';
+    if (activeFiles.length === 0) {
+      vaultActiveList.innerHTML = '<div class="text-muted" style="font-size: 0.8rem; padding: 12px; text-align: center;">No files uploaded yet.</div>';
+    } else {
+      activeFiles.forEach(file => {
+        const row = document.createElement('div');
+        row.className = 'file-row';
+        row.innerHTML = `
+          <div class="file-info-col">
+            <span class="file-icon" aria-hidden="true">${file.icon}</span>
+            <div class="file-name-meta">
+              <span class="file-name">${escapeHTML(file.name)}</span>
+              <span class="file-size">${file.size}</span>
+            </div>
+          </div>
+          <div class="file-actions-col">
+            <button class="btn btn-outline btn-xs btn-file-share" data-id="${file.id}">Share</button>
+            <button class="btn btn-secondary btn-xs btn-file-delete" data-id="${file.id}">Delete</button>
+          </div>
+        `;
+        vaultActiveList.appendChild(row);
+      });
+    }
+
+    // 2. Render Trash Bin Files
+    vaultTrashList.innerHTML = '';
+    if (trashFiles.length === 0) {
+      vaultTrashList.innerHTML = '<div class="text-muted" style="font-size: 0.8rem; padding: 12px; text-align: center;">Trash is empty.</div>';
+    } else {
+      trashFiles.forEach(file => {
+        const row = document.createElement('div');
+        row.className = 'file-row';
+        row.innerHTML = `
+          <div class="file-info-col">
+            <span class="file-icon" aria-hidden="true">🗑️</span>
+            <div class="file-name-meta">
+              <span class="file-name">${escapeHTML(file.name)}</span>
+              <span class="text-alert" style="font-size: 0.65rem;">Expires in ${file.daysLeft} days</span>
+            </div>
+          </div>
+          <div class="file-actions-col">
+            <button class="btn btn-outline btn-xs btn-file-restore" data-id="${file.id}">Restore</button>
+            <button class="btn btn-secondary btn-xs btn-file-purge" data-id="${file.id}">Purge</button>
+          </div>
+        `;
+        vaultTrashList.appendChild(row);
+      });
+    }
+
+    // 3. Update storage limits
+    const totalActiveSize = activeFiles.reduce((acc, f) => acc + f.rawSize, 0);
+    const totalTrashSize = trashFiles.reduce((acc, f) => acc + f.rawSize, 0);
+    const combinedSize = totalActiveSize + totalTrashSize;
+    
+    vaultStorageUsed.textContent = `${combinedSize.toFixed(1)} MB`;
+    
+    const percentage = Math.min((combinedSize / 512) * 100, 100);
+    vaultStorageFill.style.width = `${percentage}%`;
+    vaultTrashCount.textContent = trashFiles.length;
+  }
+
+  // Active files button clicks delegation
+  vaultActiveList.addEventListener('click', (e) => {
+    const target = e.target;
+    const fileId = parseInt(target.getAttribute('data-id'), 10);
+    
+    if (target.classList.contains('btn-file-delete')) {
+      const index = activeFiles.findIndex(f => f.id === fileId);
+      if (index !== -1) {
+        const file = activeFiles.splice(index, 1)[0];
+        file.daysLeft = 30; // 30-day grace period
+        trashFiles.push(file);
+        
+        addVaultLog(`[TRASH] Moved "${file.name}" to Trash. Auto-purge in 30 days.`, 'warning');
+        renderVault();
+      }
+    } else if (target.classList.contains('btn-file-share')) {
+      const file = activeFiles.find(f => f.id === fileId);
+      if (file) {
+        selectedFileToShare = file;
+        
+        // Reset share modal fields
+        shareResultContainer.classList.add('hide');
+        shareResultUrl.textContent = '';
+        btnShareGenerate.disabled = false;
+        
+        // Show modal overlay
+        vaultShareModal.classList.remove('hide');
+        addVaultLog(`[SHARE] Configuring temporary parameters for "${file.name}"...`);
+      }
+    }
+  });
+
+  // Trash bin buttons click delegation
+  vaultTrashList.addEventListener('click', (e) => {
+    const target = e.target;
+    const fileId = parseInt(target.getAttribute('data-id'), 10);
+
+    if (target.classList.contains('btn-file-restore')) {
+      const index = trashFiles.findIndex(f => f.id === fileId);
+      if (index !== -1) {
+        const file = trashFiles.splice(index, 1)[0];
+        delete file.daysLeft;
+        activeFiles.push(file);
+        
+        addVaultLog(`[RECOVERY] File "${file.name}" restored to Active Storage successfully.`, 'success');
+        renderVault();
+      }
+    } else if (target.classList.contains('btn-file-purge')) {
+      const index = trashFiles.findIndex(f => f.id === fileId);
+      if (index !== -1) {
+        const file = trashFiles.splice(index, 1)[0];
+        
+        addVaultLog(`[SHREDDER] Permanently shredded file blocks of "${file.name}" from disk.`, 'alert');
+        renderVault();
+      }
+    }
+  });
+
+  // Tab buttons
+  btnVaultFilesTab.addEventListener('click', () => {
+    btnVaultFilesTab.classList.add('active');
+    btnVaultTrashTab.classList.remove('active');
+    vaultActiveList.classList.remove('hide');
+    vaultTrashList.classList.add('hide');
+  });
+
+  btnVaultTrashTab.addEventListener('click', () => {
+    btnVaultTrashTab.classList.add('active');
+    btnVaultFilesTab.classList.remove('active');
+    vaultTrashList.classList.remove('hide');
+    vaultActiveList.classList.add('hide');
+  });
+
+  // Simulate File Upload
+  const uploadCandidates = [
+    { name: "analytics_dashboard.json", size: "4.8 MB", rawSize: 4.8, type: "json", icon: "📊" },
+    { name: "server_config.yml", size: "0.2 MB", rawSize: 0.2, type: "yaml", icon: "⚙️" },
+    { name: "header_bg.jpg", size: "2.1 MB", rawSize: 2.1, type: "jpg", icon: "🖼️" },
+    { name: "avatar_vector.svg", size: "0.5 MB", rawSize: 0.5, type: "svg", icon: "🎨" }
   ];
 
-  const generatedMarkdown = `# AI Project Analysis
-
-## Project Structure
-- \`src/backend/main.py\` - REST controllers and FastAPI bootloader.
-- \`src/backend/models.py\` - SQL schemas and Database connections.
-- \`src/dashboard/App.js\` - Entry point for dashboard UI components.
-
-## Extracted Metas
-- **Language Ratio:** Python (65%), JavaScript (35%)
-- **Backend Framework:** FastAPI v0.95
-- **DB Driver:** SQLAlchemy (MySQL Adapter)
-
-## Generated Docs
-Project documentation compiler successfully run at 2026-06-26.
-`;
-
-  btnSimZip.addEventListener('click', () => {
-    dropzoneIdle.classList.add('hide');
-    dropzoneRunning.classList.remove('hide');
-    zipLogs.innerHTML = '';
-
-    simulationLogs.forEach(log => {
-      setTimeout(() => {
-        const line = document.createElement('div');
-        line.className = 'log-line';
-        line.textContent = log.text;
-        zipLogs.appendChild(line);
-        zipLogs.scrollTop = zipLogs.scrollHeight;
-      }, log.delay);
-    });
-
-    // Finished simulation sequence
+  btnVaultUpload.addEventListener('click', () => {
+    btnVaultUpload.disabled = true;
+    
+    // Choose a random candidate file
+    const candidate = uploadCandidates[Math.floor(Math.random() * uploadCandidates.length)];
+    const uniqueName = candidate.name;
+    
+    addVaultLog(`[HTTP] POST /api/v1/files/upload - multipart/form-data [${uniqueName}]`);
+    
     setTimeout(() => {
-      dropzoneRunning.classList.add('hide');
-      dropzoneCompleted.classList.remove('hide');
-      mdPreview.textContent = generatedMarkdown;
-    }, 2800);
+      // Step 1: Duplicate check (SHA256)
+      addVaultLog(`[SECURITY] Calculating SHA256 duplicate scanning index...`);
+      
+      setTimeout(() => {
+        // If file already exists in active storage, block it
+        const exists = activeFiles.some(f => f.name === uniqueName);
+        if (exists) {
+          addVaultLog(`[ABORT] SHA256 match found! Duplicate file "${uniqueName}" rejected.`, 'alert');
+          btnVaultUpload.disabled = false;
+          return;
+        }
+
+        // Pushing new simulated file
+        const newFile = {
+          id: fileIdCounter++,
+          name: uniqueName,
+          size: candidate.size,
+          rawSize: candidate.rawSize,
+          type: candidate.type,
+          icon: candidate.icon
+        };
+        
+        activeFiles.push(newFile);
+        addVaultLog(`[DATABASE] Added metadata descriptors to local database.`, 'success');
+        
+        setTimeout(() => {
+          addVaultLog(`[DAEMON] File upload completed successfully. Storage sync ok.`, 'success');
+          renderVault();
+          btnVaultUpload.disabled = false;
+        }, 300);
+
+      }, 600);
+
+    }, 400);
   });
 
-  btnResetZip.addEventListener('click', () => {
-    dropzoneCompleted.classList.add('hide');
-    dropzoneIdle.classList.remove('hide');
+  // Share Modal controls
+  btnShareCancel.addEventListener('click', () => {
+    vaultShareModal.classList.add('hide');
+    selectedFileToShare = null;
   });
 
-  // Drag and drop mock feedback
-  const zipDropzone = document.getElementById('zip-dropzone');
-  ['dragenter', 'dragover'].forEach(eventName => {
-    zipDropzone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      zipDropzone.style.borderColor = 'var(--accent-teal)';
-      zipDropzone.style.background = 'rgba(0, 242, 254, 0.02)';
-    }, false);
+  btnShareGenerate.addEventListener('click', () => {
+    btnShareGenerate.disabled = true;
+    const expiry = shareExpiry.value;
+    const isPassword = sharePassword.checked;
+    
+    addVaultLog(`[API-CALL] POST /api/v1/share/create - { expiry: ${expiry}, password: ${isPassword} }`);
+    
+    setTimeout(() => {
+      const randomHash = Math.random().toString(36).substr(2, 6);
+      const generatedLink = `anaswin.dev/s/${randomHash}`;
+      
+      shareResultUrl.textContent = generatedLink;
+      shareResultContainer.classList.remove('hide');
+      
+      addVaultLog(`[SHARE] Generated secure link: "${generatedLink}" for "${selectedFileToShare.name}"`, 'success');
+    }, 600);
   });
 
-  ['dragleave', 'drop'].forEach(eventName => {
-    zipDropzone.addEventListener(eventName, (e) => {
-      e.preventDefault();
-      zipDropzone.style.borderColor = 'var(--card-border)';
-      zipDropzone.style.background = 'transparent';
-      if (eventName === 'drop') {
-        // Trigger simulation on drop
-        btnSimZip.click();
-      }
-    }, false);
+  btnCopyShare.addEventListener('click', () => {
+    const textToCopy = shareResultUrl.textContent;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      const originalText = btnCopyShare.textContent;
+      btnCopyShare.textContent = 'Copied!';
+      btnCopyShare.classList.add('text-success');
+      
+      setTimeout(() => {
+        btnCopyShare.textContent = originalText;
+        btnCopyShare.classList.remove('text-success');
+      }, 1500);
+    });
   });
+
+  // Close share modal clicking on overlay
+  vaultShareModal.addEventListener('click', (e) => {
+    if (e.target === vaultShareModal) {
+      vaultShareModal.classList.add('hide');
+      selectedFileToShare = null;
+    }
+  });
+
+  // Initial Vault rendering
+  renderVault();
 
   // ==========================================================================
   // CONTACT FORM LOGIC (SMTP Daemon Simulation Output)

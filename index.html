@@ -490,24 +490,24 @@
 
         <hr class="project-separator">
 
-        <!-- Project 3: AI Project Report Generator -->
+        <!-- Project 3: Cloud File Storage -->
         <div class="project-wrapper" data-category="web">
           <div class="project-details">
-            <span class="project-tag">Pure Frontend Client Utility</span>
-            <h3 class="project-title">AI Project Report Generator</h3>
+            <span class="project-tag">Flask / Python API</span>
+            <h3 class="project-title">Cloud File Storage</h3>
             <p class="project-description">
-              A pure frontend utility that takes an uploaded directory ZIP file, extracts source code completely
-              in-browser via the JSZip library, and formats structural contexts to auto-build Markdown documentation
-              templates.
+              A secure, feature-rich web platform for file hosting. Implements PBKDF2 password hashing,
+              SHA256 duplicate detection, custom time-limited and password-protected sharing links, 
+              complete file versioning, and an automated 30-day soft-delete trash system.
             </p>
             <div class="project-tech-stack">
-              <span class="tech-tag">JSZip</span>
-              <span class="tech-tag">React / JS</span>
-              <span class="tech-tag">Markdown Parser</span>
-              <span class="tech-tag">File System API</span>
+              <span class="tech-tag">Flask</span>
+              <span class="tech-tag">SQLAlchemy</span>
+              <span class="tech-tag">PBKDF2 / SHA256</span>
+              <span class="tech-tag">HTML5 / CSS3</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/yourusername/project-report-generator" target="_blank"
+              <a href="https://github.com/Anaswin/cloud-handling" target="_blank"
                 rel="noopener noreferrer" class="btn btn-outline btn-sm icon-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -521,39 +521,88 @@
               </a>
             </div>
           </div>
-          <!-- Project 3 Interactive Widget: ZIP Extractor & MD Builder -->
+          <!-- Project 3 Interactive Widget: Cloud Vault Simulator -->
           <div class="project-widget">
-            <div class="widget-container zip-widget">
-              <div class="zip-dropzone" id="zip-dropzone">
-                <div class="dropzone-default" id="dropzone-idle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                    class="zip-svg">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                  </svg>
-                  <p>Drag & drop <strong>project.zip</strong> or click below to simulate</p>
-                  <button class="btn btn-secondary btn-sm" id="btn-simulate-zip">Simulate Zip Upload</button>
+            <div class="widget-container vault-widget">
+              
+              <!-- Vault Dashboard Header -->
+              <div class="vault-header">
+                <div class="vault-tabs">
+                  <button class="vault-tab-btn active" id="btn-vault-files" aria-label="View Active Files">Files</button>
+                  <button class="vault-tab-btn" id="btn-vault-trash" aria-label="View Trash Bin">
+                    Trash <span class="trash-count-badge" id="vault-trash-count">1</span>
+                  </button>
                 </div>
+                <button class="btn btn-primary btn-xs" id="btn-vault-upload">Simulate Upload</button>
+              </div>
 
-                <div class="dropzone-processing hide" id="dropzone-running">
-                  <div class="spinner"></div>
-                  <h4 class="process-title">Extracting with JSZip...</h4>
-                  <div class="console-logs" id="zip-console-logs">
-                    <!-- Dynamic logs -->
+              <!-- Vault Body -->
+              <div class="vault-body">
+                
+                <!-- Storage Gauge -->
+                <div class="vault-storage-section">
+                  <div class="storage-meta">
+                    <span class="storage-text">Storage Used: <strong id="vault-storage-used">45.8 MB</strong> / 512 MB</span>
+                  </div>
+                  <div class="storage-bar-bg">
+                    <div class="storage-bar-fill" id="vault-storage-fill" style="width: 9%;"></div>
                   </div>
                 </div>
 
-                <div class="dropzone-result hide" id="dropzone-completed">
-                  <div class="result-header">
-                    <span class="text-success">✔ report_template.md generated!</span>
-                    <button class="btn btn-outline btn-xs" id="btn-reset-zip">Reset</button>
+                <!-- Files Table List -->
+                <div class="vault-files-container" id="vault-active-list">
+                  <!-- JS dynamically renders rows here -->
+                </div>
+
+                <!-- Trash Table List (Hidden by default) -->
+                <div class="vault-files-container hide" id="vault-trash-list">
+                  <!-- JS dynamically renders rows here -->
+                </div>
+
+                <!-- Live Log Console Panel -->
+                <div class="vault-console">
+                  <div class="vault-console-title">Orchestrator Logs</div>
+                  <div class="vault-console-body" id="vault-console-log">
+                    <div class="vault-log-line">systemd[1]: Starting Flask Vault Daemon...</div>
+                    <div class="vault-log-line text-success">✔ daemon.service: Vault database connected [cloud_files.db]</div>
                   </div>
-                  <pre class="markdown-preview" id="md-preview-content">
-                  </pre>
+                </div>
+
+              </div>
+
+              <!-- Share Options Modal Overlay (Mock popup) -->
+              <div class="vault-modal-overlay hide" id="vault-share-modal">
+                <div class="vault-modal">
+                  <h4 class="modal-title">Configure Secure Link</h4>
+                  <p class="modal-subtitle">Generate custom temporary sharing parameters.</p>
+                  
+                  <div class="modal-form-group">
+                    <label for="share-expiry">Link Expiry</label>
+                    <select id="share-expiry">
+                      <option value="1h">1 Hour</option>
+                      <option value="24h" selected>24 Hours</option>
+                      <option value="7d">7 Days</option>
+                      <option value="never">Never (Persistent)</option>
+                    </select>
+                  </div>
+
+                  <div class="modal-form-group-checkbox">
+                    <input type="checkbox" id="share-password" checked>
+                    <label for="share-password">Password Protection</label>
+                  </div>
+
+                  <div class="modal-result-box hide" id="share-result-container">
+                    <span class="share-url" id="share-result-url">anaswin.dev/s/xyz</span>
+                    <button class="btn btn-outline btn-xs" id="btn-copy-share" aria-label="Copy Share Link">Copy</button>
+                  </div>
+
+                  <div class="modal-buttons">
+                    <button class="btn btn-secondary btn-sm" id="btn-share-cancel">Cancel</button>
+                    <button class="btn btn-primary btn-sm" id="btn-share-generate">Generate Link</button>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
